@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Drop a file on iRODS</title>
+
+</head>
+<body>
+<style type="text/css">
+  #drop_zone {width:100px;height:100px;padding:20px;
+     border:10px solid #eee;
+     box-shadow:5px 5px 5px #ccc;
+     font: 1.0em verdana; 
+   }
+ </style>
+
+<div id="drop_zone">Drop files here</div>
+<output id="list"></output>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script>
+
+  function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    var files = evt.dataTransfer.files; 
+
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+
+  }
+
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  }
+ 
+
+  var dropZone = document.getElementById('drop_zone');
+  dropZone.addEventListener('dragover', handleDragOver, false);
+  dropZone.addEventListener('drop', handleFileSelect, false);
+  $.ajax({ 
+  crossDomain: true, 
+  type:'POST',
+  url:'http://130.251.10.61:8080/irods-rest-0.0.1-SNAPSHOT/rest/fileContents/biolabZone/home/biolab/XtensUser.js',
+   dataType: "json",
+   contentType: "multipart/form-data",
+  headers:{  "Authorization": "Basic "}, 
+ 
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Insert a new User</title>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+  $(document).ready(function() {
+    $("#date").datepicker({
+    dateFormat: 'dd-mm-yy'
+ });
+  });
+  </script>
+  <script language="javascript">
+function alpha(e) {
+     var k;
+     document.all ? k = e.keyCode : k = e.which;
+     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k>191 && k<256) || k == 138 || k == 154 || k == 142 || k == 158|| k == 39);
+}
+</script>
+
+</head>
+ 
+<body>
+<form id="form1" name="form1" method="post" action="/getData">
+  <p>
+  <label><label>Insert the User.<br />
+  </p>
+  <p>
+  </label>Name
+  <input type="text" name="name" id="name" placeholder="Please Input Name" onkeypress="return alpha(event);" required />
+    </label>
+  </p>
+   <p>
+    <label>Surname
+        <input type="text" name="surname" id="surname" placeholder="Please Input Surname" onkeypress="return alpha(event);" required />
+    </label>
+  </p>
+  <p>
+  
+    <label>BirthDate
+        <input type= "text" name = "date" id="date" placeholder="Please Input the BirthDate" required />
+    </label>
+ 
+  </p>
+  <p>
+    <label>Sex
+        <input type="radio" name="sex" value="M" checked="checked" />M
+		<input type="radio" name="sex" value="F" />F
+    </label>
+  </p>
+  <p>
+    <label>Login
+        <input type="text" name="login" id="login" placeholder="Please Input Login" />
+    </label>
+  </p>
+  <p>
+    <label>Password
+        <input type="password" name="password" id="password" placeholder="Please Input the Password" />
+    </label>
+  </p>
+  <p>
+    <label>
+      <input type="submit" name="insert" id="insert" value="Insert"/>
+     
+    </label>
+  </p>
+   
+</form>
+</body>
+</html>

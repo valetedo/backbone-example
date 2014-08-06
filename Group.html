@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert a new group</title>
+ <script language="javascript">
+function alpha(e) {
+     var k;
+     document.all ? k = e.keyCode : k = e.which;
+     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k>191 && k<256) || k == 138 || k == 154 || k == 142 || k == 158|| k == 39);
+}
+</script>
+</head>
+<body>
+<form id="form2" name="form2" method="post" action="/getGroup">
+  <p>
+  <label><label>Insert the Group.<br />
+  </p>
+  <p>
+  </label>Name
+  <input type="text" name="name" id="name" placeholder="Please Input Name of the Group" onkeypress="return alpha(event);" required />
+   </label>
+  </p>
+   <p>
+    <label>
+      <input type="submit" name="insert" id="insert" value="Insert"/>
+     
+    </label>
+  </p>
+</body>
+</html>

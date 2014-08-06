@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<title>Associate the user to the group</title>
+  <head>
+ <style type="text/css">
+  #G1 {width:100px;height:100px;padding:20px;
+     border:10px solid #eee;
+     box-shadow:5px 5px 5px #ccc;
+     font: 1.0em verdana; 
+   }
+  #G2 {width:100px;height:100px;padding:20px;
+    border:10px solid #eee;
+     box-shadow:5px 5px 5px #ccc;
+     font: 1.0em verdana ;
+  }
+ #G3 {width:100px;height:100px;padding:20px;
+    border:10px solid #eee;
+     box-shadow:5px 5px 5px #ccc;
+     font: 1.0em verdana ;}
+  #G4 {width:100px;height:100px;padding:20px;
+     border:10px solid #eee;
+     box-shadow:5px 5px 5px #ccc;
+     font: 1.0em verdana ;}
+     
+   
+   
+</style>
+  </head>
+<body>
+<form id="form3" name="form3" method="post" action="/getAssociation">
+ <div style="float: left; width: 50%;">
+<p><li id="1" name="1" draggable="true" ondragstart="drag(event)" >User1</li></p>
+<p><li id="2" name="user" draggable="true" ondragstart="drag(event)" >User2</li></p>
+</div>
+
+ <div style="float: left; width: 50%;">
+ 
+<p><div id="G1" name="1" ondrop="drop(event)" ondragover="enableDrop(event)">Associate the user to the Group1 </p></div><br/>
+<p><div id="G2" ondrop="drop(event)" ondragover="enableDrop(event)">Associate the user to the Group2 </p></div><br/>
+<p><div id="G3" ondrop="drop(event)" ondragover="enableDrop(event)">Associate the user to the Group3 </p></div><br/>
+<p><div id="G4" ondrop="drop(event)" ondragover="enableDrop(event)">Associate the user to the Group4 </p></div><br/>
+
+</body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script>
+
+
+function drag(evt)
+{
+evt.dataTransfer.setData("text",evt.target.id);
+
+}
+function enableDrop(evt)
+{
+evt.preventDefault();
+}
+ 
+function drop(ev) {
+
+ ev.preventDefault();
+ var data=ev.dataTransfer.getData("Text");
+ ev.target.appendChild(document.getElementById(data).cloneNode(true));
+ var grp = ev.target.id[1];
+	$.post('association',{ user: data, group : grp }, 
+    function(returnedData){
+         console.log(returnedData);
+});
+}
+  
+ 
+</script>
+
+</html>

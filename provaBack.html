@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Backbone App</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<script type="text/javascript"
+	src="http://underscorejs.org/underscore-min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript"
+	src="http://backbonejs.org/backbone-min.js"></script>
+</head>
+<body>
+	<script type="text/template" id="edit-user-template">
+        <fieldset>
+            <legend>Add user to the Server</legend>
+          <div id = "user">
+            <input type="text"  id="user_name" placeholder="Enter the User Name" required />
+            <input type="text"  id="user_surname" placeholder="Enter the User Surname" required />
+            <input type="button" id="post_data" value="Send data to the Server" />	
+          </div>
+        </fieldset>
+      </script>
+	<div id="data"></div>
+
+</body>
+
+<script>
+     
+     User = Backbone.Model.extend({
+     	url:'/user',
+       	defaults:{ name:'',
+       				surname:''
+       				}
+       
+       				});
+     
+   $(document).ready(function(){
+           
+  
+     var UserView = Backbone.View.extend({
+    	
+   
+    	   
+    	
+     	render: function() {    
+            var template = _.template( $("#edit-user-template").html() );
+            this.$el.html( template );
+                },
+                
+  		initialize: function(){
+  			this.render();
+  			this.name = this.$('#user_name');
+  			this.surname = this.$('#user_surname');
+
+  		},
+   
+  		events:{
+   
+   			'click #post_data':'post'
+   
+  		},
+  	
+  		post:function()
+  		{
+  	
+  		user.fetch({data:{user_name:this.name.val(),user_surname:this.surname.val()},type:'POST'});
+  		this.name.val('');
+  		this.surname.val('');
+  	
+  		}
+});
+
+
+var user = new User;
+var userView = new UserView({el:$('#data'), model: user });
+
+
+           
+        });
+        </script>
+</html>
