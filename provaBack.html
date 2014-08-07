@@ -16,29 +16,49 @@
 </head>
 <body>
 	<script type="text/template" id="edit-user-template">
-        <fieldset>
+        <fieldset style="width:10%;float:left">
             <legend>Add user to the Server</legend>
           <div id = "user">
-            <input type="text"  id="user_name" placeholder="Enter the User Name" required />
-            <input type="text"  id="user_surname" placeholder="Enter the User Surname" required />
+			<p>
+           <input type="text"  id="user_name" placeholder="Enter the User Name" required onkeypress="return alpha(event);"/>
+            </p>
+			<p>
+			<input type="text"  id="user_surname" placeholder="Enter the User Surname" required onkeypress="return alpha(event);" />
+			</p>
+			<p>
 			<input type="text"  id="user_date" placeholder="Enter the User Birthdate" />
+			</p>
+			<p>
 			<label>Sex
        		  <select id="user_sex" >
    				<option>M </option>
    				<option>F </option>
 			 </select>
     		</label>
+			</p>
+			<p>
 			<input type="text"  id="user_account" placeholder="Enter the User Account" required />
+			</p>
+			<p>
 			<input type="text"  id="user_password" placeholder="Enter the User Password" required />
+			</p>
+			<p>
             <input type="button" id="post_data" value="Send data to the Server" />	
           </div>
         </fieldset>
+		
       </script>
 	<div id="data"></div>
 
 </body>
 
 <script>
+
+function alpha(e) {
+     var k;
+     document.all ? k = e.keyCode : k = e.which;
+     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k>191 && k<256) || k == 138 || k == 154 || k == 142 || k == 158|| k == 39);
+}
      
      User = Backbone.Model.extend({
      	url:'/user',
@@ -51,6 +71,7 @@
        				}
        
        				});
+       
      
    $(document).ready(function(){
            
@@ -64,7 +85,7 @@
      	render: function() {    
             var template = _.template( $("#edit-user-template").html() );
             this.$el.html( template );
-              $("#user_date").datepicker({
+            $("#user_date").datepicker({
    					 dateFormat: 'dd-mm-yy'
  					});
            
@@ -79,12 +100,14 @@
   			this.sex = this.$('#user_sex');
   			this.login = this.$('#user_account');
   			this.password = this.$('#user_password');
+  			
 
   		},
    
   		events:{
    
-   			'click #post_data':'post'
+   			'click #post_data':'post',
+   			
    
   		},
   	
@@ -100,11 +123,13 @@
   		this.password.val('');
   	
   		}
+  	
 });
 
 
 var user = new User;
-var userView = new UserView({el:$('#data'), model: user });
+
+var userView = new UserView({el:$('#data'), model:user });
 
 
            
