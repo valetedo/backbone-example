@@ -27,7 +27,7 @@ var server = http.createServer(function (req,res){
  
            var POST = qs.parse(body);
              console.log(POST);        
-        	var user = new XtensUser('',POST['user_name'],POST['user_surname'],'1111-11-11','','','');
+        	var user = new XtensUser('',POST['user_name'],POST['user_surname'],POST['user_birthdate'],POST['user_sex'],POST['user_account'],POST['user_password']);
         	userDao.create(user);
      
           

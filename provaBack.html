@@ -10,6 +10,9 @@
 	src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript"
 	src="http://backbonejs.org/backbone-min.js"></script>
+	  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 </head>
 <body>
 	<script type="text/template" id="edit-user-template">
@@ -18,6 +21,15 @@
           <div id = "user">
             <input type="text"  id="user_name" placeholder="Enter the User Name" required />
             <input type="text"  id="user_surname" placeholder="Enter the User Surname" required />
+			<input type="text"  id="user_date" placeholder="Enter the User Birthdate" />
+			<label>Sex
+       		  <select id="user_sex" >
+   				<option>M </option>
+   				<option>F </option>
+			 </select>
+    		</label>
+			<input type="text"  id="user_account" placeholder="Enter the User Account" required />
+			<input type="text"  id="user_password" placeholder="Enter the User Password" required />
             <input type="button" id="post_data" value="Send data to the Server" />	
           </div>
         </fieldset>
@@ -31,14 +43,19 @@
      User = Backbone.Model.extend({
      	url:'/user',
        	defaults:{ name:'',
-       				surname:''
+       				surname:'',
+       				birthdate:'',
+       				sex:'',
+       				login:'',
+       				password:''
        				}
        
        				});
      
    $(document).ready(function(){
            
-  
+          
+   
      var UserView = Backbone.View.extend({
     	
    
@@ -47,12 +64,21 @@
      	render: function() {    
             var template = _.template( $("#edit-user-template").html() );
             this.$el.html( template );
+              $("#user_date").datepicker({
+   					 dateFormat: 'dd-mm-yy'
+ 					});
+           
                 },
                 
   		initialize: function(){
   			this.render();
+  			
   			this.name = this.$('#user_name');
   			this.surname = this.$('#user_surname');
+  			this.date = this.$('#user_date');
+  			this.sex = this.$('#user_sex');
+  			this.login = this.$('#user_account');
+  			this.password = this.$('#user_password');
 
   		},
    
@@ -65,9 +91,13 @@
   		post:function()
   		{
   	
-  		user.fetch({data:{user_name:this.name.val(),user_surname:this.surname.val()},type:'POST'});
+  		user.fetch({data:{user_name:this.name.val(),user_surname:this.surname.val(),user_birthdate:this.date.val(),user_sex:this.sex.val(),user_account:this.login.val(),user_password:this.password.val()},type:'POST'});
   		this.name.val('');
   		this.surname.val('');
+  		this.date.val('');
+  		this.sex.val('');
+  		this.login.val('');
+  		this.password.val('');
   	
   		}
 });
